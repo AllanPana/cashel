@@ -36,7 +36,8 @@ public class RegistrationServlet extends HttpServlet {
 
         try {
             out.print("Welcome " +email);
-            out.print("\nRegistration Id  : " + memberManagement.registerForNewsLetter(email) );
+            out.println("Registration Id  : " + memberManagement.registerForNewsLetter(email) );
+            out.println("testing git changes");
 
 
         } catch (RegistrationException e) {
