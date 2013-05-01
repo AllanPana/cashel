@@ -8,12 +8,19 @@ package com.highview.app;
  * To change this template use File | Settings | File Templates.
  */
 
+
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  *
  * @author Allan Pana
  */
+@Singleton
 public class MemberManagement {
-
+    @Inject
+    MemberRepository memberRepository;
 
     /**
      * Register a new email address for our news letter
@@ -22,16 +29,16 @@ public class MemberManagement {
      * @return a unique regiastration Id
      */
     public int registerForNewsLetter(String email) throws RegistrationException {
+        String emailLowercase = email.toLowerCase();
 
-        MemberRepository memberRepository = new MemberRepository();
-        boolean isRegistered = memberRepository.alreadyRegistered(email);
+        boolean isRegistered = memberRepository.alreadyRegistered(emailLowercase);
 
         if(isRegistered) {
-            throw new RegistrationException(email + "already register");
+            throw new RegistrationException(emailLowercase + "already register");
 
         }
 
-        memberRepository.insert(email);
+        memberRepository.insert(emailLowercase);
         return email.hashCode();
 
     }

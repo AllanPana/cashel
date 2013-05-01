@@ -3,6 +3,7 @@ package com.highview.web;
 import com.highview.app.MemberManagement;
 import com.highview.app.RegistrationException;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -24,15 +25,14 @@ import java.io.IOException;
 @WebServlet("/newsletter/register")
 public class RegistrationServlet extends HttpServlet {
 
+    @Inject
+    MemberManagement memberManagement;
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        String myEmail = request.getParameter("email") ;
-        String email = myEmail.toLowerCase();
-        MemberManagement memberManagement = new MemberManagement();
-
-
+        String email = request.getParameter("email") ;
 
 
 

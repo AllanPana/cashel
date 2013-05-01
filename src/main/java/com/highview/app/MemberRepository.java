@@ -1,5 +1,6 @@
 package com.highview.app;
 
+import javax.inject.Singleton;
 import java.util.*;
 
 /**
@@ -9,6 +10,7 @@ import java.util.*;
  * Time: 1:00 PM
  * To change this template use File | Settings | File Templates.
  */
+@Singleton
 public class MemberRepository {
 
     private static Set<String> member = new HashSet<>();
