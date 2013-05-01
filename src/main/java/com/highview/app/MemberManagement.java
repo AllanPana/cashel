@@ -8,8 +8,6 @@ package com.highview.app;
  * To change this template use File | Settings | File Templates.
  */
 
-import javax.management.MBeanRegistrationException;
-
 /**
  *
  * @author Allan Pana
@@ -25,15 +23,15 @@ public class MemberManagement {
      */
     public int registerForNewsLetter(String email) throws RegistrationException {
 
-        MemberDAO memberDAO = new MemberDAO();
-        boolean isRegistered = memberDAO.alreadyRegistered(email);
+        MemberRepository memberRepository = new MemberRepository();
+        boolean isRegistered = memberRepository.alreadyRegistered(email);
 
         if(isRegistered) {
             throw new RegistrationException(email + "already register");
 
         }
 
-        memberDAO.insert(email);
+        memberRepository.insert(email);
         return email.hashCode();
 
     }

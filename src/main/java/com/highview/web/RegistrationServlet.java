@@ -3,6 +3,7 @@ package com.highview.web;
 import com.highview.app.MemberManagement;
 import com.highview.app.RegistrationException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -27,22 +28,31 @@ public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        String email = request.getParameter("email") ;
+        String myEmail = request.getParameter("email") ;
+        String email = myEmail.toLowerCase();
         MemberManagement memberManagement = new MemberManagement();
 
-        ServletOutputStream out = response.getOutputStream();
+
 
 
 
         try {
-            out.print("Welcome " +email);
-            out.println("Registration Id  : " + memberManagement.registerForNewsLetter(email) );
-            out.println("testing git changes");
+
+            int registrationId = memberManagement.registerForNewsLetter(email);
+
+            request.setAttribute("regId", registrationId);
+            request.setAttribute("yourEmail",email);
+
+            RequestDispatcher rd = request.getRequestDispatcher("thanks.jsp");
+
+            rd.forward(request,response);
 
 
         } catch (RegistrationException e) {
             throw new ServletException(e);
         }
+
+
 
     }
 }
