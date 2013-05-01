@@ -1,6 +1,12 @@
 package com.highview.app;
 
+import javax.annotation.Resource;
 import javax.inject.Singleton;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -13,16 +19,37 @@ import java.util.*;
 @Singleton
 public class MemberRepository {
 
-    private static Set<String> member = new HashSet<>();
+
 
     /**
      *
      * @param email
      * @return
      */
+
+    @Resource(lookup="java:/HighviewDS")
+    DataSource ds;
+
     public boolean alreadyRegistered(String email)  {
 
-            return member.contains(email) ;
+        try (
+                Connection con = ds.getConnection();
+                PreparedStatement ps = con.prepareStatement("select * from Subsriber where email = ?")
+
+                )
+
+        {
+
+
+            ps.setString(1,email);
+            try(ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e) ;
+        }
+
     }
 
 
@@ -32,7 +59,20 @@ public class MemberRepository {
      */
     public void insert(String email) {
 
-            member.add(email);
+        try (
+                Connection con = ds.getConnection();
+                PreparedStatement ps = con.prepareStatement("insert into Subsriber (email) values(?)")
+        )
+
+        {
+            ps.setString(1,email);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e) ;
+        }
+
+
 
 
     }

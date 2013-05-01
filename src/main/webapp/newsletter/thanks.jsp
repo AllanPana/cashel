@@ -6,7 +6,7 @@
     <title></title>
 </head>
 <body>
-    <%= new java.util.Date() %>
+    Today is<%= new java.util.Date() %>
 
     <h1>Thanks for registration!!!</h1> <br>
 
