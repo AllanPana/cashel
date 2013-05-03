@@ -17,29 +17,39 @@ import javax.inject.Singleton;
  *
  * @author Allan Pana
  */
-@Singleton
+@javax.ejb.Singleton
 public class MemberManagement {
+
+
     @Inject
     MemberRepository memberRepository;
 
+
+
+
+
     /**
      * Register a new email address for our news letter
-     * @param email  the email to register
-     * @throwsRegistrationExceptionException when email has been registered already
+     *
+     * @param fullName
+     * @param country
+     *@param email  the email to register  @throwsRegistrationExceptionException when email has been registered already
      * @return a unique regiastration Id
      */
-    public int registerForNewsLetter(String email) throws RegistrationException {
-        String emailLowercase = email.toLowerCase();
+    public int registerForNewsLetter(String fullName, String country, String email) throws RegistrationException {
 
-        boolean isRegistered = memberRepository.alreadyRegistered(emailLowercase);
+        Member member = new Member(fullName, country, email) ;
+
+
+        boolean isRegistered = memberRepository.alreadyRegistered(member);
 
         if(isRegistered) {
-            throw new RegistrationException(emailLowercase + "already register");
+            throw new RegistrationException(email + "already register");
 
         }
 
-        memberRepository.insert(emailLowercase);
-        return email.hashCode();
+        memberRepository.insert(member);
+        return member.getEmail().hashCode();
 
     }
 }

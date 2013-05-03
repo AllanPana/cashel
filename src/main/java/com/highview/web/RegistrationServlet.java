@@ -6,7 +6,6 @@ import com.highview.app.RegistrationException;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,10 +31,13 @@ public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String email = request.getParameter("email") ;
+        String fullName = request.getParameter("fullname") ;
+        String country = request.getParameter("country");
+
 
         try {
 
-            int registrationId = memberManagement.registerForNewsLetter(email);
+            int registrationId = memberManagement.registerForNewsLetter(fullName, country, email);
 
             request.setAttribute("regId", registrationId);
             request.setAttribute("yourEmail",email);
