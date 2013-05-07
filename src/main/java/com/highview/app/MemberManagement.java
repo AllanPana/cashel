@@ -41,12 +41,12 @@ public class MemberManagement {
         Member member = new Member(fullName, country, email) ;
 
 
-        boolean isRegistered = memberRepository.alreadyRegistered(member);
+       // boolean isRegistered = memberRepository.alreadyRegistered(member);
 
-        if(isRegistered) {
-            throw new RegistrationException(email + "already register");
+       // if(isRegistered) {
+         //   throw new RegistrationException(email + "already register");
 
-        }
+       // }
 
         memberRepository.insert(member);
         return member.getEmail().hashCode();
